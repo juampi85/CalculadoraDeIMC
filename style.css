@@ -1,0 +1,65 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color:  #f68e1e91;
+}
+
+a {
+    text-decoration: none;
+}
+
+.titulo {
+    text-align: center;
+    font-size: 45px;
+    color: #228E3B;
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.subtitulo {
+        margin-left: 15px;
+    color: #17A0B5;
+}
+
+.principal {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.submit {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.card{
+    background-color: rgba(248, 183, 183, 0.473);
+    text-align: center;
+}
+
+#divPacientes {
+    display: flex;
+    justify-content: center;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.nombre-card {
+    font-weight: bold;
+}
+
+#botonMostrar {
+    margin-bottom: 15px;
+}
+
+.encabezado-pacientes {
+    background-color: rgb(23, 160, 181);
+}
+
+#mostrarPacientes {
+    font-weight: bolder;
+}
