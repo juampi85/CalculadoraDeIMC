@@ -8,7 +8,6 @@ formPacientes.addEventListener('submit', (e) => {
     const paciente = new Paciente(nombre, peso, altura, enfermedades, imc);
     pacientes.push(paciente);
     localStorage.setItem('Pacientes', JSON.stringify(pacientes));
-    // adicionarPacienteEnLaTabla (paciente);
     formPacientes.reset();
     idNombre.focus();
 });
@@ -60,6 +59,7 @@ botonMostrar.addEventListener('click', () => {
         idNombre.focus();
     });
 
+    // Función para ELIMINAR, individualemte, a los pacientes!!
     pacientes.forEach((pacientesEnArray, indice) => {
         document.getElementById(`boton${indice}`).addEventListener('click', () => {
             divPacientes.removeChild(document.getElementById(`paciente${indice}`));
