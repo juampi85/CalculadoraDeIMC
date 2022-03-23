@@ -1,78 +1,70 @@
-// Función para validar los ingresos de TEXTO en el formulario!!
-function validadorTexto(texto){
-    if (texto.length == 0){
-        swal("ERROR..!!", "Debe completar los datos....", "warning");
-        textoSinErrores = false;
-    } 
-    else{    
-        for(let i = 0; i < texto.length; i++){
-            let codigoAscii = texto.charCodeAt(i);
-            if(codigoAscii < 65 || codigoAscii > 90){
-                if((codigoAscii <97 || codigoAscii > 122)){
-                    if(codigoAscii != 32){
-                        swal("ERROR!!", "Recuerde que no debe ingresar signos y/o acentos...", "warning");
-                        textoSinErrores = false;
-                    }
-                }
-            }
-        }
-        return textoSinErrores;
-    }
+// Aquí limito las posibilidades de ingreso únicamente a letras (mayúsculas y minúsculas)
+function soloTexto(input) {
+  let texto = /[^a-z, A-Z]/gi;
+  input.value = input.value.replace(texto, "");
+}
+
+//Aquí agrego una limitación para que solo se puedan agregar números (y el punto separador de decimales)
+function soloNumeros(input) {
+  let numero = /[^0-9, .]/gi;
+  input.value = input.value.replace(numero, "");
+}
+
+// Esta limitación la hago desde acá (pero la de "ESTADO ACTUAL DE SALUD" la hago desde el mismo HTML). Ambas funcionan igual.
+document.getElementById("idNombre").onkeyup = function () {
+  soloTexto(this);
 };
 
-
-// Función para validar los ingresos de NÚMEROS en el formulario!!
-function validadorNumero(numero){
-    if (numero.length == 0){
-        swal("ERROR..!!", "Debe completar todos los renglones...", "warning");
-        numeroSinErrores = false;
-    } 
-    else{    
-        for(let i = 0; i < numero.length; i++){
-            let codigoAscii = numero.charCodeAt(i);
-            if(codigoAscii < 48 || codigoAscii > 57){
-                if(codigoAscii != 46){
-                    swal("ERROR!!", "Recuerde que solo debe ingresar números", "warning");
-                    numeroSinErrores = false;
-                }
-            }
-        }
-        return numeroSinErrores;
-    }
+// Esta limitación la hago desde acá (pero la de "ALTURA" la hago desde el mismo HTML). Ambas funcionan igual.
+document.getElementById("idPeso").onkeyup = function () {
+  soloNumeros(this);
 };
-
 
 // Evento para GUARDAR nuevos pacientes en el localStorage!!
-formPacientes.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let nombre = document.getElementById('idNombre').value; 
-    let peso = document.getElementById('idPeso').value;
-    let altura = document.getElementById('idAltura').value; 
-    let enfermedades = document.getElementById('idEnfermedades').value;
-    let imc = (peso / (altura*altura)).toFixed(2);
-    validadorTexto(nombre);
-    validadorNumero(peso);
-    validadorNumero(altura);
-    validadorTexto(enfermedades);
-    if (textoSinErrores == true && numeroSinErrores == true){
-        const paciente = new Paciente(nombre, peso, altura, enfermedades, imc);
-        pacientes.push(paciente);
-        localStorage.setItem('Pacientes', JSON.stringify(pacientes));
-        swal("Nuevo paciente...", "...agregado con éxito", "success");
-        formPacientes.reset();
-        idNombre.focus();
+formPacientes.addEventListener("submit", (e) => {
+  e.preventDefault();
+  let nombre = document.getElementById("idNombre").value;
+  let peso = document.getElementById("idPeso").value;
+  let altura = document.getElementById("idAltura").value;
+  let enfermedades = document.getElementById("idEnfermedades").value;
+  let imc = (peso / (altura * altura)).toFixed(2);
+  const paciente = new Paciente(nombre, peso, altura, enfermedades, imc);
+  swal({
+    title: "Los datos del nuevo paciente son correctos?",
+    text: "Si son correctos apriete Ok",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((crearNuevoPaciente) => {
+    if (crearNuevoPaciente) {
+      pacientes.push(paciente);
+      localStorage.setItem("Pacientes", JSON.stringify(pacientes));
+      swal({
+        text: "El nuevo paciente se guardó correctamente.",
+        icon: "success",
+        buttons:false ,
+        timer:1500,
+    });
     } else {
-        swal("ERROR!!!", "Revise alguno de los campos", "warning");
+        swal({
+            text: "El paciente, finalmente, no se guardó.",
+            icon: "error",
+            buttons:false ,
+            timer:1500,
+        });
+
     }
+  });
+  formPacientes.reset();
+  idNombre.focus();
 });
 
-
 // Evento para MOSTRAR los pacientes en cards!!
-botonMostrar.addEventListener('click', () => {
-    divPacientes.innerHTML = "";
+botonMostrar.addEventListener("click", () => {
+  divPacientes.innerHTML = "";
 
-    pacientes.forEach((pacientesEnArray, indice) => {
-        divPacientes.innerHTML += `
+  pacientes.forEach((pacientesEnArray, indice) => {
+    divPacientes.innerHTML += `
             <div id="paciente${indice}" class="card border-secondary mb-3" style="max-width: 20rem;margin:10px">
                 <div class="card-header"><h4 class="nombre-card">Paciente ${pacientesEnArray.nombre}</h4></div>
                     <div class="card-body">
@@ -83,18 +75,35 @@ botonMostrar.addEventListener('click', () => {
                         <button id="boton${indice}" class="btn btn-danger">Eliminar</button>
                     </div>
                 </div>
-        `  
-        idNombre.focus();
-    });
+        `;
+    idNombre.focus();
+  });
 
-    // Evento para ELIMINAR, individualemte, a los pacientes!!
-    pacientes.forEach((pacientesEnArray, indice) => {
-        document.getElementById(`boton${indice}`).addEventListener('click', () => {
-            divPacientes.removeChild(document.getElementById(`paciente${indice}`));
-            let indiceArray = pacientes.findIndex(paciente => paciente.nombre == pacientesEnArray.nombre);
-            pacientes.splice(indiceArray,1);
-            localStorage.setItem('Pacientes', JSON.stringify(pacientes));
-            swal("Eliminado!!", "Paciente eliminado de la base de datos", "warning");
-        });
-     });
- });
+  // Evento para ELIMINAR, individualemte, a los pacientes!!
+  pacientes.forEach((pacientesEnArray, indice) => {
+    document.getElementById(`boton${indice}`).addEventListener("click", () => {
+        swal({
+            title: `Estás seguro de eliminar a ${pacientesEnArray.nombre}?`,
+            text: "Una vez eliminado NO se podrán recuperar sus datos.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((borrarPacienteIndividual) => {
+            if (borrarPacienteIndividual) {
+                divPacientes.removeChild(document.getElementById(`paciente${indice}`));
+                let indiceArray = pacientes.findIndex(
+                  (paciente) => paciente.nombre == pacientesEnArray.nombre
+                );
+                pacientes.splice(indiceArray, 1);
+                localStorage.setItem("Pacientes", JSON.stringify(pacientes));
+              swal(`Hecho!! ${pacientesEnArray.nombre} ya es solo un recuerdo...`, {
+                icon: "success",
+              });
+            } else {
+              swal(`Perfecto, ${pacientesEnArray.nombre} y sus ${pacientesEnArray.peso} kilos seguirán en nuestra base de datos`);
+            }
+          });
+    });
+  });
+});

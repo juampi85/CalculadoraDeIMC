@@ -26,37 +26,39 @@
               class="form-control"
               id="idNombre"
               placeholder="Ingrese su nombre"
-              
-            />
-          </div>
-          <div class="form-group">
-            <label class="form-label mt-4">Peso</label>
-            <input
+              required
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label mt-4">Peso</label>
+              <input
               type="float"
               class="form-control"
               id="idPeso"
               placeholder="Ingrese su peso en kilogramos"
-              
-            />
-          </div>
-          <div class="form-group">
-            <label class="form-label mt-4">Altura</label>
-            <input
+              required
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label mt-4">Altura</label>
+              <input
               type="float"
               class="form-control"
               id="idAltura"
               placeholder="Ingrese su altura en metros"
-              
-            />
-          </div>
-          <div class="form-group">
-            <label class="form-label mt-4">Estado actual de salud</label>
-            <input
+              onkeyup="soloNumeros(this)" 
+              required
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label mt-4">Estado actual de salud</label>
+              <input
               type="text"
               class="form-control"
               id="idEnfermedades"
               placeholder="Especifique comorbilidades actuales (si las tuviera)"
-              
+              onkeyup="soloTexto(this)" 
+              required
             />
           </div>
           <button id="botonPacientes" type="submit" class="btn btn-info submit">
