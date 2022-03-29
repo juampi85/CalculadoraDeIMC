@@ -1,0 +1,30 @@
+[
+    {
+        "nombre": "Juampi",
+        "peso": 93,
+        "altura": 1.83,
+        "enfermedades": "Hipertensión",
+        "IMC": 27.77
+    },
+    {
+        "nombre": "Ana",
+        "peso": 55,
+        "altura": 1.55,
+        "enfermedades": "Diabetes gestacional",
+        "IMC": 22.89
+    },
+    {
+        "nombre": "Sol",
+        "peso": 45,
+        "altura": 1.55,
+        "enfermedades": "Flujo Gastro",
+        "IMC": 18.73
+    },
+    {
+        "nombre": "Azul",
+        "peso": 65,
+        "altura": 1.60,
+        "enfermedades": "Ninguna",
+        "IMC": 25.39
+    }
+]

@@ -25,11 +25,6 @@ a {
     color: #17A0B5;
 }
 
-#seccionPacientes {
-    display: flex;
-    flex-direction: column;
-}
-
 .principal {
     margin-left: 25px;
     margin-right: 25px;
@@ -57,13 +52,8 @@ a {
     font-weight: bold;
 }
 
-#botonMostrar, #botonBorrar {
+#botonMostrar {
     margin-bottom: 15px;
-    font-weight: bold;
-}
-
-.eraseBtn {
-    color: white;
 }
 
 .encabezado-pacientes {
@@ -72,13 +62,4 @@ a {
 
 #mostrarPacientes {
     font-weight: bolder;
-}
-
-.card {
-    margin: 15px;
-}
-
-.card-title {
-    font-weight: bold;
-    background-color: rgb(236, 236, 69);
 }
